@@ -1,0 +1,39 @@
+model:
+  base_model: "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B"
+  model_path: "../models/checkpoint-3"
+  max_tokens: 256
+  temperature: 0.2
+  do_sample: false
+  top_p: 0.9
+  repetition_penalty: 1.1
+
+optimization:
+  load_in_8bit: true
+  llm_int8_threshold: 6.0
+  llm_int8_has_fp16_weight: false
+  device_map: "auto"
+  torch_dtype: "float16"
+  offload_folder: "offload"
+
+system_prompt: "Ты — преподаватель немецкого языка для русскоязычных студентов уровня A2. Объясняй грамотно, понятно, без лишней воды."
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 1
+  timeout: 30
+
+cache:
+  redis_url: "redis://localhost:6379"
+  ttl: 3600
+  max_size: 1000
+
+logging:
+  level: "INFO"
+  format: "json"
+  file: "logs/chatbot.log"
+
+monitoring:
+  enabled: true
+  metrics_port: 9090
+  health_check_interval: 30 

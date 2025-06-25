@@ -1,0 +1,65 @@
+app:
+  name: "German Language Teaching Chatbot"
+  version: "1.0.0"
+  description: "AI-powered German language tutor for Russian-speaking students"
+  debug: false
+
+server:
+  host: "0.0.0.0"
+  port: 8000
+  reload: false
+  workers: 1
+  timeout: 30
+
+cors:
+  allow_origins: ["*"]
+  allow_credentials: true
+  allow_methods: ["*"]
+  allow_headers: ["*"]
+
+security:
+  api_key_header: "X-API-Key"
+  rate_limit: 100
+  rate_limit_window: 3600
+
+ui:
+  streamlit_port: 8501
+  theme: "light"
+  page_title: "🇩🇪 German Language Teaching Chatbot"
+  page_icon: "🇩🇪"
+
+database:
+  type: "redis"
+  url: "redis://localhost:6379"
+  pool_size: 10
+  max_connections: 20
+
+queue:
+  broker: "redis://localhost:6379/1"
+  backend: "redis://localhost:6379/2"
+  task_serializer: "json"
+  result_serializer: "json"
+  accept_content: ["json"]
+  timezone: "UTC"
+  enable_utc: true
+  task_track_started: true
+  task_time_limit: 1800
+
+logging:
+  level: "INFO"
+  format: "json"
+  handlers:
+    console:
+      level: "INFO"
+    file:
+      level: "DEBUG"
+      filename: "logs/app.log"
+      max_bytes: 10485760
+      backup_count: 5
+
+monitoring:
+  enabled: true
+  metrics_port: 9090
+  health_check_path: "/health"
+  readiness_path: "/ready"
+  liveness_path: "/live" 
